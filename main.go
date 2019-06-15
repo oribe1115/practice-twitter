@@ -21,6 +21,7 @@ func main() {
 	}))
 
 	e.GET("/search", handler.SearchHandler)
+	e.POST("/newtweet", handler.PostTweetHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
