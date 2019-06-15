@@ -2,11 +2,9 @@ package model
 
 import (
 	"net/url"
-
-	"github.com/ChimeraCoder/anaconda"
 )
 
-func Search(searchWord string) ([]anaconda.Tweet, error) {
+func Search(searchWord string) ([]string, error) {
 	v := url.Values{}
 	v.Set("count", "10")
 
@@ -17,6 +15,12 @@ func Search(searchWord string) ([]anaconda.Tweet, error) {
 
 	tweets := searchResult.Statuses
 
-	return tweets, nil
+	var tweetTexts []string
+
+	for _, tweet := range tweets {
+		tweetTexts = append(tweetTexts, tweet.Text)
+	}
+
+	return tweetTexts, nil
 
 }

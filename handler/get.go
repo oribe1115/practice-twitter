@@ -10,12 +10,13 @@ import (
 )
 
 func SearchHandler(c echo.Context) error {
-	tweets, err := model.Search("golang")
+
+	tweetTexts, err := model.Search("golang")
 
 	if err != nil {
 		fmt.Println(err)
 		return c.String(http.StatusInternalServerError, "faild to search")
 	}
 
-	return c.JSON(http.StatusOK, tweets)
+	return c.JSON(http.StatusOK, tweetTexts)
 }
