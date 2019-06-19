@@ -1,13 +1,13 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/garyburd/go-oauth/oauth"
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/urlfetch"
+	"github.com/labstack/echo"
 
 	"github.com/oribe1115/practice-twitter/model"
 )
@@ -17,31 +17,32 @@ var (
 	apiInHandler *anaconda.TwitterApi
 )
 
-func GetRequestTokenHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
-	http.DefaultClient.Transport = &urlfetch.Transport{Context: ctx}
-
+func GetRequestTokenHandler(c echo.Context) error {
 	anaconda.SetConsumerKey("consumerKey")
 	anaconda.SetConsumerSecret("consumerSecret")
 
-	url, tmpCred, err := apiInHandler.AuthorizationURL(os.Getenv("CALLBACK_URL"))
+	_, tmpCred, err := apiInHandler.AuthorizationURL(os.Getenv("CALLBACK_URL"))
 	if err != nil {
-		return
+		fmt.Println(err)
+		return c.String(http.StatusInternalServerError, "faild to send authorizeing request")
 	}
 	credential = tmpCred
-	http.Redirect(w, r, url, http.StatusFound)
+
+	fmt.Println("success to send authorizeing request")
+	return c.String(http.StatusOK, "success to send authorizeing request")
 }
 
-func GetAccessTokenHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := appengine.NewContext(r)
-	http.DefaultClient.Transport = &urlfetch.Transport{Context: ctx}
+func GetAccessTokenHandler(c echo.Context) error {
+	verifier := c.QueryParam("oauth_verifier")
 
-	c, _, err := apiInHandler.GetCredentials(credential, r.URL.Query().Get("oauth_verifier"))
+	tmpCred, _, err := apiInHandler.GetCredentials(credential, verifier)
 	if err != nil {
-		return
+		fmt.Println(err)
+		return c.String(http.StatusInternalServerError, "faild to get access token")
 	}
-	apiInHandler = anaconda.NewTwitterApi(c.Token, c.Secret)
+	apiInHandler = anaconda.NewTwitterApi(tmpCred.Token, tmpCred.Secret)
 	model.SetAPI(apiInHandler)
-	// TEST POST
-	model.PostTweet()
+
+	fmt.Println("success to get access token")
+	return c.String(http.StatusOK, "success to get access token")
 }
