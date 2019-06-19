@@ -39,3 +39,7 @@ func GetRequestToken() error {
 	credentional = tmpCred
 	return nil
 }
+
+func SetAPI(apiInHandler *anaconda.TwitterApi) {
+	api = apiInHandler
+}

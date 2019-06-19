@@ -14,4 +14,5 @@ require (
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/oribe1115/oribe-todo-list-server v0.0.0-20190617223631-bdaa76f447bd // indirect
 	golang.org/x/net v0.0.0-20190613194153-d28f0bde5980 // indirect
+	google.golang.org/appengine v1.4.0
 )
