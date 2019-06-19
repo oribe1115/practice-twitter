@@ -12,13 +12,15 @@ import (
 
 func main() {
 	model.LoadEnv()
-	model.GetTwitterAPI()
+	// model.GetTwitterAPI()
 
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins:     []string{"http://localhost:8080"},
 		AllowCredentials: true,
 	}))
+
+	e.GET("/authorize", handler.GetRequestTokenHandler())
 
 	e.GET("/search", handler.SearchHandler)
 	e.POST("/newtweet", handler.PostTweetHandler)
