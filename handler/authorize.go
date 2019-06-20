@@ -21,7 +21,14 @@ func GetRequestTokenHandler(c echo.Context) error {
 	anaconda.SetConsumerKey("consumerKey")
 	anaconda.SetConsumerSecret("consumerSecret")
 
-	_, tmpCred, err := apiInHandler.AuthorizationURL(os.Getenv("CALLBACK_URL"))
+	fmt.Println("success to set default keys")
+
+	fmt.Println(os.Getenv("CALLBACK_URL"))
+	url, tmpCred, err := apiInHandler.AuthorizationURL(os.Getenv("CALLBACK_URL"))
+
+	fmt.Println(url)
+	fmt.Println(tmpCred)
+
 	if err != nil {
 		fmt.Println(err)
 		return c.String(http.StatusInternalServerError, "faild to send authorizeing request")
