@@ -20,7 +20,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	e.GET("/authorize", handler.GetRequestTokenHandler)
+	// e.GET("/authorize", handler.GetRequestTokenHandler)
 	e.GET("/authorize/callback", handler.GetAccessTokenHandler)
 
 	e.GET("/search", handler.SearchHandler)
