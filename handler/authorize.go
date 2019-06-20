@@ -13,8 +13,9 @@ import (
 )
 
 var (
-	credential   *oauth.Credentials
-	apiInHandler *anaconda.TwitterApi
+	credential            *oauth.Credentials
+	apiInHandler          *anaconda.TwitterApi
+	apiInHandlerWithToken *anaconda.TwitterApi
 )
 
 // あとで消す
@@ -43,20 +44,20 @@ func GetAccessTokenHandler(c echo.Context) error {
 		fmt.Println(err)
 		return c.String(http.StatusInternalServerError, "faild to get access token")
 	}
-	apiInHandlerWithToken := anaconda.NewTwitterApiWithCredentials(tmpCred.Token, tmpCred.Secret, os.Getenv("CONSUMER_KEY"), os.Getenv("CONSUMER_SECRET"))
+	apiInHandlerWithToken = anaconda.NewTwitterApiWithCredentials(tmpCred.Token, tmpCred.Secret, os.Getenv("CONSUMER_KEY"), os.Getenv("CONSUMER_SECRET"))
 	model.SetAPI(apiInHandlerWithToken)
 
 	fmt.Println("success to get access token")
 
-	TokenCookie := new(http.Cookie)
-	TokenCookie.Name = "Token"
-	TokenCookie.Value = tmpCred.Token
-	c.SetCookie(TokenCookie)
+	tokenCookie := new(http.Cookie)
+	tokenCookie.Name = "Token"
+	tokenCookie.Value = tmpCred.Token
+	c.SetCookie(tokenCookie)
 
-	SecretCookie := new(http.Cookie)
-	SecretCookie.Name = "Secret"
-	SecretCookie.Value = tmpCred.Secret
-	c.SetCookie(SecretCookie)
+	secretCookie := new(http.Cookie)
+	secretCookie.Name = "Secret"
+	secretCookie.Value = tmpCred.Secret
+	c.SetCookie(secretCookie)
 
 	fmt.Println("success to set Cookie")
 
@@ -74,6 +75,22 @@ func checkAuthorization(next echo.HandlerFunc) echo.HandlerFunc {
 			apiInHandler = protoAPI
 			credential = tmpCred
 			return c.String(http.StatusOK, url)
+		}
+
+		if apiInHandlerWithToken == nil {
+			tokenCookie, err := c.Cookie("Token")
+			if err != nil {
+				fmt.Println(err)
+				c.String(http.StatusInternalServerError, "faild to get tokenCookie")
+			}
+			secretCookie, err := c.Cookie("Secret")
+			if err != nil {
+				fmt.Println(err)
+				c.String(http.StatusInternalServerError, "faild to get secretCookie")
+			}
+
+			apiInHandlerWithToken = anaconda.NewTwitterApiWithCredentials(tokenCookie.Value, secretCookie.Value, os.Getenv("CONSUMER_KEY"), os.Getenv("CONSUMER_SECRET"))
+			model.SetAPI(apiInHandlerWithToken)
 		}
 		return next(c)
 	}
