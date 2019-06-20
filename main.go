@@ -1,7 +1,7 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/labstack/echo"
@@ -16,7 +16,7 @@ func main() {
 
 	_, err := model.EstablishConnection()
 	if err != nil {
-		log.Fatal("Cannot Connect to Database: %s", err)
+		fmt.Println(err)
 	}
 
 	e := echo.New()
