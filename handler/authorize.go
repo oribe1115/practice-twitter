@@ -65,6 +65,7 @@ func GetAccessTokenHandler(c echo.Context) error {
 }
 
 func CheckAuthorization(next echo.HandlerFunc) echo.HandlerFunc {
+	fmt.Println("chceck authorization")
 	return func(c echo.Context) error {
 		if apiInHandler == nil {
 			fmt.Println("apiInHandler")
