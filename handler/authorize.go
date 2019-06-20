@@ -64,37 +64,37 @@ func GetAccessTokenHandler(c echo.Context) error {
 	return c.String(http.StatusOK, "success to get access token")
 }
 
-func CheckAuthorization(next echo.HandlerFunc) echo.HandlerFunc {
-	fmt.Println("chceck authorization")
-	return func(c echo.Context) error {
-		if apiInHandler == nil {
-			fmt.Println("apiInHandler")
-			protoAPI, tmpCred, url, err := model.GetRequestToken()
-			if err != nil {
-				fmt.Println(err)
-				return c.String(http.StatusInternalServerError, "faild to get request token")
-			}
-			apiInHandler = protoAPI
-			credential = tmpCred
-			return c.String(http.StatusOK, url)
-		}
+// func CheckAuthorization(next echo.HandlerFunc) echo.HandlerFunc {
+// 	fmt.Println("chceck authorization")
+// 	return func(c echo.Context) error {
+// 		if apiInHandler == nil {
+// 			fmt.Println("apiInHandler")
+// 			protoAPI, tmpCred, url, err := model.GetRequestToken()
+// 			if err != nil {
+// 				fmt.Println(err)
+// 				return c.String(http.StatusInternalServerError, "faild to get request token")
+// 			}
+// 			apiInHandler = protoAPI
+// 			credential = tmpCred
+// 			return c.String(http.StatusOK, url)
+// 		}
 
-		if apiInHandlerWithToken == nil {
-			fmt.Println("apiInHandlerWithToken")
-			tokenCookie, err := c.Cookie("Token")
-			if err != nil {
-				fmt.Println(err)
-				c.String(http.StatusInternalServerError, "faild to get tokenCookie")
-			}
-			secretCookie, err := c.Cookie("Secret")
-			if err != nil {
-				fmt.Println(err)
-				c.String(http.StatusInternalServerError, "faild to get secretCookie")
-			}
+// 		if apiInHandlerWithToken == nil {
+// 			fmt.Println("apiInHandlerWithToken")
+// 			tokenCookie, err := c.Cookie("Token")
+// 			if err != nil {
+// 				fmt.Println(err)
+// 				c.String(http.StatusInternalServerError, "faild to get tokenCookie")
+// 			}
+// 			secretCookie, err := c.Cookie("Secret")
+// 			if err != nil {
+// 				fmt.Println(err)
+// 				c.String(http.StatusInternalServerError, "faild to get secretCookie")
+// 			}
 
-			apiInHandlerWithToken = anaconda.NewTwitterApiWithCredentials(tokenCookie.Value, secretCookie.Value, os.Getenv("CONSUMER_KEY"), os.Getenv("CONSUMER_SECRET"))
-			model.SetAPI(apiInHandlerWithToken)
-		}
-		return next(c)
-	}
-}
+// 			apiInHandlerWithToken = anaconda.NewTwitterApiWithCredentials(tokenCookie.Value, secretCookie.Value, os.Getenv("CONSUMER_KEY"), os.Getenv("CONSUMER_SECRET"))
+// 			model.SetAPI(apiInHandlerWithToken)
+// 		}
+// 		return next(c)
+// 	}
+// }
