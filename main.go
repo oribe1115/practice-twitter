@@ -33,7 +33,7 @@ func main() {
 	e.GET("/authorize/callback", handler.GetAccessTokenHandler)
 
 	e.GET("/search", handler.SearchHandler)
-	e.POST("/newtweet", handler.PostTweetHandler)
+	e.GET("/newtweet", handler.PostTweetHandler)
 
 	port := os.Getenv("PORT")
 	if port == "" {
