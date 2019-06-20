@@ -31,7 +31,7 @@ func SetAPI(apiInHandler *anaconda.TwitterApi) {
 
 func EstablishConnection() (*gorm.DB, error) {
 	databaseURL := os.Getenv("DATABASE_URL")
-	_db, err := gorm.Open("postgress", databaseURL)
+	_db, err := gorm.Open("postgres", databaseURL)
 	if err != nil {
 		return nil, errors.New("faild to connect to DB")
 	}

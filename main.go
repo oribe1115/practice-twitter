@@ -25,6 +25,9 @@ func main() {
 		AllowCredentials: true,
 	}))
 
+	// dbのテスト用
+	e.GET("create/table", handler.CreateTableHandler)
+
 	// e.GET("/authorize", handler.GetRequestTokenHandler)
 	e.GET("/authorize/callback", handler.GetAccessTokenHandler)
 
