@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/labstack/echo"
@@ -12,7 +13,11 @@ import (
 
 func main() {
 	model.LoadEnv()
-	// model.GetTwitterAPI()
+
+	_, err := model.EstablishConnection()
+	if err != nil {
+		log.Fatal("Cannot Connect to Database: %s", err)
+	}
 
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
