@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/labstack/echo"
@@ -24,6 +25,10 @@ func main() {
 		AllowOrigins:     []string{"http://localhost:8080"},
 		AllowCredentials: true,
 	}))
+
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "HelloWorld")
+	})
 
 	// dbのテスト用
 	e.GET("create/table", handler.CreateTableHandler)
