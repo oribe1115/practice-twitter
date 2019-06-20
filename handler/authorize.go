@@ -64,7 +64,7 @@ func GetAccessTokenHandler(c echo.Context) error {
 	return c.String(http.StatusOK, "success to get access token")
 }
 
-func checkAuthorization(next echo.HandlerFunc) echo.HandlerFunc {
+func CheckAuthorization(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		if apiInHandler == nil {
 			protoAPI, tmpCred, url, err := model.GetRequestToken()
