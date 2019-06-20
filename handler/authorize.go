@@ -18,12 +18,8 @@ var (
 )
 
 func GetRequestTokenHandler(c echo.Context) error {
-	anaconda.SetConsumerKey("consumerKey")
-	anaconda.SetConsumerSecret("consumerSecret")
+	apiInHandler = anaconda.NewTwitterApiWithCredentials("", "", os.Getenv("CONSUMER_KEY"), os.Getenv("CONSUMER_SECRET"))
 
-	fmt.Println("success to set default keys")
-
-	fmt.Println(os.Getenv("CALLBACK_URL"))
 	url, tmpCred, err := apiInHandler.AuthorizationURL(os.Getenv("CALLBACK_URL"))
 
 	fmt.Println(url)
