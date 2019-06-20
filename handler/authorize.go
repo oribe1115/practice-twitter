@@ -67,6 +67,7 @@ func GetAccessTokenHandler(c echo.Context) error {
 func CheckAuthorization(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		if apiInHandler == nil {
+			fmt.Println("apiInHandler")
 			protoAPI, tmpCred, url, err := model.GetRequestToken()
 			if err != nil {
 				fmt.Println(err)
@@ -78,6 +79,7 @@ func CheckAuthorization(next echo.HandlerFunc) echo.HandlerFunc {
 		}
 
 		if apiInHandlerWithToken == nil {
+			fmt.Println("apiInHandlerWithToken")
 			tokenCookie, err := c.Cookie("Token")
 			if err != nil {
 				fmt.Println(err)
