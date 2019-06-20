@@ -5,12 +5,14 @@ import (
 	"os"
 
 	"github.com/ChimeraCoder/anaconda"
+	"github.com/garyburd/go-oauth/oauth"
 	"github.com/jinzhu/gorm"
 )
 
 var (
-	api *anaconda.TwitterApi
-	db  *gorm.DB
+	api          *anaconda.TwitterApi
+	credentional *oauth.Credentials
+	db           *gorm.DB
 )
 
 func SetAPI(apiInHandler *anaconda.TwitterApi) {
