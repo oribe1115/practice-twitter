@@ -13,8 +13,6 @@ import (
 )
 
 func main() {
-	model.LoadEnv()
-
 	_, err := model.EstablishConnection()
 	if err != nil {
 		fmt.Println(err)

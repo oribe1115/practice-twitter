@@ -17,13 +17,6 @@ var (
 	db           *gorm.DB
 )
 
-// .envファイルを読み込む
-func LoadEnv() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-}
 
 func SetAPI(apiInHandler *anaconda.TwitterApi) {
 	api = apiInHandler
