@@ -1,25 +1,14 @@
 package model
 
 import (
-	"log"
-
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/garyburd/go-oauth/oauth"
-	"github.com/joho/godotenv"
 )
 
 var (
 	api          *anaconda.TwitterApi
 	credentional *oauth.Credentials
 )
-
-// .envファイルを読み込む
-func LoadEnv() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-}
 
 // // Twitter Apiのためのkeyなどをセットする
 // func GetTwitterAPI() {

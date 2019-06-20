@@ -31,7 +31,7 @@ func GetRequestTokenHandler(c echo.Context) error {
 	credential = tmpCred
 
 	fmt.Println("success to send authorizeing request")
-	return c.String(http.StatusOK, "success to send authorizeing request")
+	return c.String(http.StatusOK, url)
 }
 
 func GetAccessTokenHandler(c echo.Context) error {
