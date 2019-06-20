@@ -2,13 +2,11 @@ package model
 
 import (
 	"errors"
-	"log"
 	"os"
 
 	"github.com/ChimeraCoder/anaconda"
 	"github.com/garyburd/go-oauth/oauth"
 	"github.com/jinzhu/gorm"
-	"github.com/joho/godotenv"
 )
 
 var (
