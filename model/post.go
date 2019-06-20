@@ -5,7 +5,7 @@ import (
 )
 
 func PostTweet() (anaconda.Tweet, error) {
-	tweet, err := api.PostTweet("test from api", nil)
+	tweet, err := api.PostTweet("test from api again", nil)
 
 	if err != nil {
 		return tweet, err
