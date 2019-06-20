@@ -23,7 +23,6 @@ func GetRequestTokenHandler(c echo.Context) error {
 	url, tmpCred, err := apiInHandler.AuthorizationURL(os.Getenv("CALLBACK_URL"))
 
 	fmt.Println(url)
-	fmt.Println(tmpCred)
 
 	if err != nil {
 		fmt.Println(err)
