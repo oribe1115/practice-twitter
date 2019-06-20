@@ -8,9 +8,15 @@ import (
 	"github.com/labstack/echo/middleware"
 
 	"github.com/oribe1115/practice-twitter/handler"
+	"github.com/oribe1115/practice-twitter/model"
 )
 
 func main() {
+	enviroment := os.Getenv("ENVIROMENT")
+	if enviroment == "" {
+		model.LoadEnv()
+	}
+
 	// model.GetTwitterAPI()
 
 	e := echo.New()
