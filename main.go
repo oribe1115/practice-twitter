@@ -17,7 +17,11 @@ func main() {
 		model.LoadEnv()
 	}
 
-	// model.GetTwitterAPI()
+	token := os.Getenv("ACCESS_TOKEN")
+	if token != "" {
+		model.GetTwitterAPI()
+	}
+	model.GetTwitterAPI()
 
 	e := echo.New()
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
